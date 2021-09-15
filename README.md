@@ -113,6 +113,12 @@ $ jsonnet -e "(import 'deployment.proto.libsonnet') + (import 'deployment.jsonne
 
 ## Downsides
 
+- Can't use functions as they cannot be manifested as JSON.
+Instead they have to be emulated using objects which works okay for functions that produce objects but not so well for other values.
+```console
+$ jsonnet -e "{ _in:: { a: 10, b: 1 }, _out:: self._in.a + self._in.b }._out"
+11
+```
 - Changes to the library structure must be reflected in two places. Though this is only true of the top level objects.
 - The prototype file is not actually able to be fully manifested without additional Jsonnet code:
 ```console
